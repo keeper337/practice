@@ -27,14 +27,14 @@ func NewGame() *Game {
 
 // DisplayGameState shows the current state of the game
 func (g *Game) DisplayGameState() {
-	fmt.Println("================================")
-	fmt.Println("         GAME STATE")
-	fmt.Println("================================")
+	fmt.Println("=====================================")
+	fmt.Println("              GAME STATE")
+	fmt.Println("=====================================")
 	fmt.Printf("Player: %s\n", g.PlayerName)
 	fmt.Printf("Score: %d\n", g.Score)
 	fmt.Printf("Lives: %d\n", g.Lives)
 	fmt.Printf("Level: %d\n", g.Level)
-	fmt.Println("================================")
+	fmt.Println("=====================================")
 }
 
 // GetInput prompts the user for input with clear instructions
@@ -104,8 +104,9 @@ func (g *Game) UpdateLevel() {
 
 // PlayGame runs the main game loop
 func (g *Game) PlayGame() {
-	fmt.Println("Welcome to the Game!")
-	fmt.Println("====================")
+	fmt.Println("=====================================")
+	fmt.Println("           WELCOME TO THE GAME")
+	fmt.Println("=====================================")
 	
 	// Get player name
 	name := GetInput("Enter your name: ")
@@ -114,6 +115,7 @@ func (g *Game) PlayGame() {
 	}
 	
 	fmt.Println("Type 'help' for available commands.")
+	fmt.Println()
 	
 	for {
 		g.DisplayGameState()
