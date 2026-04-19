@@ -9,28 +9,28 @@ The objective of Hangman is to guess a hidden word by suggesting letters within 
 3. If the guessed letter is in the word, it is revealed in its correct position(s).
 4. If the guessed letter is not in the word, a part of the hangman figure is drawn.
 5. The game continues until:
-   - The player guesses all the letters in the word (they win), or
+   - The player guesses all letters in the word (they win), or
    - The hangman figure is completed (they lose).
 
 ## Example Gameplay
 Let's say the secret word is "hangman":
 
-1. Initial state: _ _ _ _ _ _ _
+1. Initial display: `_ _ _ _ _ _ _`
 2. Player guesses 'a':
-   - Word becomes: _ a _ _ _ _ _
+   - Word becomes: `_ a _ _ a _ _`
 3. Player guesses 'n':
-   - Word becomes: _ a n _ n _ _
+   - Word becomes: `_ a n _ a n _`
 4. Player guesses 'g':
-   - Word becomes: g a n _ n _ _
+   - Word becomes: `g a n _ a n _`
 5. Player guesses 'h':
-   - Word becomes: g a n h n _ _
+   - Word becomes: `h a n _ a n _`
 6. Player guesses 'm':
-   - Word becomes: g a n h n m _
+   - Word becomes: `h a n m a n _`
 7. Player guesses 'x':
    - A part of the hangman is drawn (incorrect guess)
 8. Player guesses 'l':
-   - Word becomes: g a n h n m l
-9. Player wins as all letters are guessed.
+   - Word becomes: `h a n m a n l`
+9. Player wins by guessing all letters.
 
 ## Tips
 - Start with common vowels (a, e, i, o, u) and consonants.
