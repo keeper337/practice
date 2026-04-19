@@ -10,6 +10,9 @@ import (
 func main() {
 	fmt.Println("Welcome to the game!")
 	
+	// Keep track of guessed letters
+	guessedLetters := make(map[rune]bool)
+	
 	// Game loop
 	for {
 		fmt.Print("Enter a letter guess (or 'quit' to exit): ")
@@ -35,8 +38,17 @@ func main() {
 			continue
 		}
 		
-		// Process the guess (placeholder logic)
+		// Check if letter was already guessed
 		guess := strings.ToLower(input)
+		if guessedLetters[rune(guess[0])] {
+			fmt.Println("You already guessed that letter!")
+			continue
+		}
+		
+		// Add to guessed letters
+		guessedLetters[rune(guess[0])] = true
+		
+		// Process the guess (placeholder logic)
 		fmt.Printf("You guessed: %s\n", guess)
 		
 		// Placeholder for game logic
