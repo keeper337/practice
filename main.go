@@ -9,16 +9,18 @@ import (
 
 // WordList contains a list of words for the Hangman game
 var WordList = []string{
-	"hangman", "computer", "programming", "golang", "development",
-	"algorithm", "function", "variable", "string", "integer",
+	"apple", "banana", "cherry", "date", "elderberry",
+	"fig", "grape", "honeydew", "kiwi", "lemon",
+	"mango", "nectarine", "orange", "papaya", "quince",
+	"raspberry", "strawberry", "tangerine", "watermelon", "blueberry",
 }
 
 // Game represents a Hangman game instance
 type Game struct {
-	word        string
-	guessed     string
-	wrongGuesses int
-	maxWrong    int
+	word      string
+	guessed   []bool
+	attempts  int
+	maxAttempts int
 }
 
 // NewGame creates a new Hangman game with a random word
@@ -26,116 +28,125 @@ func NewGame() *Game {
 	rand.Seed(time.Now().UnixNano())
 	word := WordList[rand.Intn(len(WordList))]
 	return &Game{
-		word:        word,
-		guessed:     strings.Repeat("_", len(word)),
-		wrongGuesses: 0,
-		maxWrong:    6,
+		word:      word,
+		guessed:   make([]bool, len(word)),
+		attempts:  0,
+		maxAttempts: 6,
 	}
 }
 
-// Guess handles a letter guess
+// Guess checks if a letter is in the word and updates the game state
 func (g *Game) Guess(letter string) bool {
-	if strings.Contains(g.guessed, letter) || g.wrongGuesses >= g.maxWrong {
+	if len(letter) != 1 || !strings.IsLower(letter) {
 		return false
 	}
 
-	correct := false
-	newGuessed := make([]byte, len(g.word))
+	letter = strings.ToLower(letter)
+	found := false
 
 	for i, char := range g.word {
 		if string(char) == letter {
-			newGuessed[i] = letter[0]
-			correct = true
-		} else {
-			newGuessed[i] = g.guessed[i]
+			g.guessed[i] = true
+			found = true
 		}
 	}
 
-	g.guessed = string(newGuessed)
-
-	if !correct {
-		g.wrongGuesses++
+	if !found {
+		g.attempts++
 	}
-
-	return correct
+	return found
 }
 
-// IsWon checks if the game is won
+// IsWon checks if the player has guessed all letters
 func (g *Game) IsWon() bool {
-	return !strings.Contains(g.guessed, "_")
-}
-
-// IsLost checks if the game is lost
-func (g *Game) IsLost() bool {
-	return g.wrongGuesses >= g.maxWrong
-}
-
-// Display shows the current state of the game
-func (g *Game) Display() {
-	fmt.Println("Word:", g.guessed)
-	fmt.Printf("Wrong guesses: %d/%d\n", g.wrongGuesses, g.maxWrong)
-}
-
-// HangmanDraw prints a simple hangman drawing based on wrong guesses
-func (g *Game) HangmanDraw() {
-	switch g.wrongGuesses {
-	case 0:
-		fmt.Println("  +---+")
-		fmt.Println("  |   |")
-		fmt.Println("      |")
-		fmt.Println("      |")
-		fmt.Println("      |")
-		fmt.Println("      |")
-		fmt.Println("=========")
-	case 1:
-		fmt.Println("  +---+")
-		fmt.Println("  |   |")
-		fmt.Println("  O   |")
-		fmt.Println("      |")
-		fmt.Println("      |")
-		fmt.Println("      |")
-		fmt.Println("=========")
-	case 2:
-		fmt.Println("  +---+")
-		fmt.Println("  |   |")
-		fmt.Println("  O   |")
-		fmt.Println("  |   |")
-		fmt.Println("      |")
-		fmt.Println("      |")
-		fmt.Println("=========")
-	case 3:
-		fmt.Println("  +---+")
-		fmt.Println("  |   |")
-		fmt.Println("  O   |")
-		fmt.Println(" /|   |")
-		fmt.Println("      |")
-		fmt.Println("      |")
-		fmt.Println("=========")
-	case 4:
-		fmt.Println("  +---+")
-		fmt.Println("  |   |")
-		fmt.Println("  O   |")
-		fmt.Println(" /|\\  |")
-		fmt.Println("      |")
-		fmt.Println("      |")
-		fmt.Println("=========")
-	case 5:
-		fmt.Println("  +---+")
-		fmt.Println("  |   |")
-		fmt.Println("  O   |")
-		fmt.Println(" /|\\  |")
-		fmt.Println(" /    |")
-		fmt.Println("      |")
-		fmt.Println("=========")
-	case 6:
-		fmt.Println("  +---+")
-		fmt.Println("  |   |")
-		fmt.Println("  O   |")
-		fmt.Println(" /|\\  |")
-		fmt.Println(" / \\  |")
-		fmt.Println("      |")
-		fmt.Println("=========")
+	for _, guessed := range g.guessed {
+		if !guessed {
+			return false
+		}
 	}
+	return true
+}
+
+// IsLost checks if the player has exceeded maximum attempts
+func (g *Game) IsLost() bool {
+	return g.attempts >= g.maxAttempts
+}
+
+// DisplayWord shows the current state of the word with guessed letters
+func (g *Game) DisplayWord() string {
+	var result []string
+	for i, char := range g.word {
+		if g.guessed[i] {
+			result = append(result, string(char))
+		} else {
+			result = append(result, "_")
+		}
+	}
+	return strings.Join(result, " ")
+}
+
+// DisplayHangman shows the hangman drawing based on attempts
+func (g *Game) DisplayHangman() {
+	stages := []string{
+		`  +---+
+  |   |
+      |
+      |
+      |
+      |
+=========`,
+		`  +---+
+  |   |
+  O   |
+      |
+      |
+      |
+=========`,
+		`  +---+
+  |   |
+  O   |
+  |   |
+      |
+      |
+=========`,
+		`  +---+
+  |   |
+  O   |
+ /|   |
+      |
+      |
+=========`,
+		`  +---+
+  |   |
+  O   |
+ /|\  |
+      |
+      |
+=========`,
+		`  +---+
+  |   |
+  O   |
+ /|\  |
+ /    |
+      |
+=========`,
+		`  +---+
+  |   |
+  O   |
+ /|\  |
+ / \  |
+      |
+=========`,
+	}
+
+	if g.attempts < len(stages) {
+		fmt.Println(stages[g.attempts])
+	}
+}
+
+// DisplayAttempts shows the number of remaining attempts
+func (g *Game) DisplayAttempts() {
+	fmt.Printf("Attempts left: %d/%d\n", g.maxAttempts-g.attempts, g.maxAttempts)
 }
 
 func main() {
@@ -144,8 +155,9 @@ func main() {
 	fmt.Println("Try to guess the word by suggesting letters.")
 
 	for !game.IsWon() && !game.IsLost() {
-		game.Display()
-		game.HangmanDraw()
+		fmt.Println("\nWord:", game.DisplayWord())
+		game.DisplayAttempts()
+		game.DisplayHangman()
 		fmt.Print("Enter a letter: ")
 		var input string
 		fmt.Scanln(&input)
@@ -161,8 +173,8 @@ func main() {
 		}
 	}
 
-	game.Display()
-	game.HangmanDraw()
+	fmt.Println("\nWord:", game.DisplayWord())
+	game.DisplayHangman()
 	if game.IsWon() {
 		fmt.Println("Congratulations! You won!")
 	} else {
