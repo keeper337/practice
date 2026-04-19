@@ -57,6 +57,16 @@ func (g *Game) Guess(letter rune) bool {
 	return found
 }
 
+// GetLives returns the current number of lives
+func (g *Game) GetLives() int {
+	return g.lives
+}
+
+// GetGuessed returns the current guessed state
+func (g *Game) GetGuessed() []bool {
+	return g.guessed
+}
+
 // IsWon checks if the game is won
 func (g *Game) IsWon() bool {
 	for _, guessed := range g.guessed {
@@ -170,7 +180,7 @@ func main() {
 		fmt.Println("\n" + game.DisplayHangman())
 		fmt.Println("Word: " + game.DisplayWord())
 		fmt.Println(game.DisplayGuessedLetters())
-		fmt.Printf("Lives remaining: %d\n", game.lives)
+		fmt.Printf("Lives remaining: %d\n", game.GetLives())
 		
 		var input string
 		fmt.Print("Guess a letter: ")
