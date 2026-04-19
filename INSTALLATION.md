@@ -1,20 +1,20 @@
 # Installation Instructions for Hangman Game
 
-This document provides clear and concise installation instructions for the Hangman game. These instructions are designed to be easy to follow and work across different operating systems.
+This document provides clear instructions on how to install and run the Hangman game.
 
 ## Prerequisites
 
-Before installing the Hangman game, ensure you have the following dependencies installed on your system:
+Before you begin, ensure you have the following installed:
 
-- Go (version 1.19 or higher)
-- Git
+- [Go](https://golang.org/dl/) (version 1.19 or higher)
+- A terminal or command prompt
 
 ## Installation Steps
 
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/yourusername/hangman-game.git
-   cd hangman-game
+   git clone <repository-url>
+   cd <repository-name>
    ```
 
 2. **Build the Game**
@@ -29,20 +29,14 @@ Before installing the Hangman game, ensure you have the following dependencies i
 
 ## Cross-Platform Compatibility
 
-The Hangman game is written in Go, which makes it highly portable. It should run on any platform where Go is supported, including:
-
-- Windows
-- macOS
-- Linux
-
-Ensure that you have the appropriate Go toolchain installed for your operating system.
+These instructions work on Windows, macOS, and Linux. Ensure that you have Go installed and properly configured in your system's PATH.
 
 ## Troubleshooting
 
-If you encounter any issues during installation or execution, please check the following:
+If you encounter any issues:
 
-- Make sure Go is correctly installed and added to your PATH.
-- Verify that Git is installed and accessible from your command line.
-- Ensure that you are in the correct directory when running the build and run commands.
+- Make sure Go is correctly installed by running `go version`.
+- Verify that the source files are correctly placed in the project directory.
+- Check for any syntax errors in the code using `go vet`.
 
-For further assistance, refer to the project's issue tracker or contact the maintainers.
+For further assistance, refer to the [Go documentation](https://golang.org/doc/).
