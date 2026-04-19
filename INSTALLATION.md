@@ -42,3 +42,22 @@ The installation steps are compatible with:
 - Windows (with WSL)
 
 Ensure that you have the required tools installed for your platform.
+
+## Troubleshooting
+
+If you encounter issues during installation:
+
+1. Verify that Go is correctly installed:
+   ```bash
+   go version
+   ```
+
+2. Ensure `GOPATH` and `GOROOT` are set properly in your environment.
+
+3. If `go mod tidy` fails, try:
+   ```bash
+   go clean -modcache
+   go mod tidy
+   ```
+
+4. For Windows users with WSL, ensure that the WSL environment is up to date.
