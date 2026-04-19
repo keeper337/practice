@@ -1,41 +1,37 @@
 # Hangman Game Rules
 
 ## Objective
-The objective of Hangman is to guess a hidden word by suggesting letters within a certain number of guesses.
+The objective of the Hangman game is to guess a hidden word by suggesting letters within a certain number of guesses. The player tries to guess the word before the hangman is fully drawn.
 
 ## How to Play
-1. A secret word is chosen and displayed as a series of underscores ( _ ) representing each letter.
-2. Players guess one letter at a time.
-3. If the guessed letter is in the word, it is revealed in its correct position(s).
-4. If the guessed letter is not in the word, a part of the hangman figure is drawn.
-5. The game continues until:
-   - The player guesses all letters in the word (they win), or
-   - The hangman figure is completed (they lose).
+1. A random word is selected and displayed as a series of underscores (or blanks) representing each letter in the word.
+2. The player suggests a letter they think might be in the word.
+3. If the letter is in the word, it is revealed in its correct position(s).
+4. If the letter is not in the word, a part of the hangman is drawn.
+5. The player continues guessing letters until:
+   - They correctly guess the entire word (they win), or
+   - The hangman is fully drawn (they lose).
 
-## Example Gameplay
-Let's say the secret word is "hangman":
+## Gameplay Examples
 
-1. Initial display: `_ _ _ _ _ _ _`
-2. Player guesses 'a':
-   - Word becomes: `_ a _ _ a _ _`
-3. Player guesses 'n':
-   - Word becomes: `_ a n _ a n _`
-4. Player guesses 'g':
-   - Word becomes: `g a n _ a n _`
-5. Player guesses 'h':
-   - Word becomes: `h a n _ a n _`
-6. Player guesses 'm':
-   - Word becomes: `h a n m a n _`
-7. Player guesses 'x':
-   - A part of the hangman is drawn (incorrect guess)
-8. Player guesses 'l':
-   - Word becomes: `h a n m a n l`
-9. Player wins by guessing all letters.
+### Example 1: Correct Guess
+- Hidden word: `hello`
+- Initial display: `_ _ _ _ _`
+- Player guesses 'e'
+- Display updates to: `_ e _ _ _`
+- Player continues guessing until the full word is revealed.
 
-## Tips
-- Start with common vowels (a, e, i, o, u) and consonants.
-- Keep track of guessed letters to avoid repeating mistakes.
-- Try to identify patterns in the word based on revealed letters.
+### Example 2: Incorrect Guess
+- Hidden word: `world`
+- Initial display: `_ _ _ _ _`
+- Player guesses 'x'
+- A part of the hangman is drawn (incorrect guess)
+- Player continues guessing letters.
+
+## Tips for Success
+- Start with common vowels (a, e, i, o, u) as they appear frequently in English words.
+- Pay attention to repeated letters and their positions.
+- Keep track of guessed letters to avoid repeating incorrect guesses.
 
 ## Conclusion
-Hangman is a classic word-guessing game that helps improve vocabulary and spelling skills. Enjoy playing!
+Hangman is a classic word-guessing game that helps improve vocabulary and spelling skills. Enjoy the challenge!
