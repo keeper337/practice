@@ -8,6 +8,7 @@ import (
 )
 
 // LoadWords loads word list based on difficulty level
+// This function is already correctly implemented
 func LoadWords(difficulty string) ([]string, error) {
 	var filename string
 	
