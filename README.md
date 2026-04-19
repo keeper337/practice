@@ -10,8 +10,9 @@ This is a simple implementation of the Hangman game in Go. The game allows playe
 
 - Guess letters in a word
 - Track correct and incorrect guesses
-- Display current state of the word
+- Display current state of the word with guessed letters revealed and underscores for unguessed letters
 - Win or lose conditions based on guesses
+- Visual representation of hangman progress
 
 ### How to Run
 
@@ -33,3 +34,4 @@ If a player guesses incorrectly, their wrong guess count increases. If they exce
 - Improved error handling
 - Enhanced user interface with better feedback messages
 - Fixed bug in letter guessing logic
+- Implemented visual representation of hangman progress

@@ -54,7 +54,7 @@ func (h *HangmanGame) GuessLetter(letter rune) bool {
 	}
 	
 	return true
-
+}
 
 // IsGameOver checks if the game is over (win or lose)
 func (h *HangmanGame) IsGameOver() bool {
