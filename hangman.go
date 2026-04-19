@@ -85,6 +85,13 @@ func (h *HangmanGame) GetMaxWrongGuesses() int {
 	return h.maxWrongGuesses
 }
 
+// SetWordToGuess sets a new word to guess
+func (h *HangmanGame) SetWordToGuess(word string) {
+	h.wordToGuess = strings.ToLower(word)
+	h.guessedLetters = make(map[rune]bool)
+	h.wrongGuesses = 0
+}
+
 func main() {
 	// Example usage
 	game := NewHangmanGame("hangman")

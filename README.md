@@ -26,3 +26,9 @@ go run hangman.go
 The game starts with a predefined word (in this case "hangman"). Players can guess letters one at a time. The game will display the current state of the word with guessed letters revealed and underscores for unguessed letters.
 
 If a player guesses incorrectly, their wrong guess count increases. If they exceed the maximum number of allowed wrong guesses (default is 6), they lose the game.
+
+## Improvements
+
+- Added support for custom words
+- Improved error handling
+- Enhanced user interface with better feedback messages
