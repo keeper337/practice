@@ -39,7 +39,8 @@ func (h *HangmanGame) DisplayWord() string {
 
 // GuessLetter processes a letter guess
 func (h *HangmanGame) GuessLetter(letter rune) bool {
-	letter = strings.ToLower(string(letter))[0]
+	// Convert to lowercase for case-insensitive comparison
+	letter = rune(strings.ToLower(string(letter))[0])
 	
 	if h.guessedLetters[letter] {
 		return true // Already guessed
@@ -53,7 +54,7 @@ func (h *HangmanGame) GuessLetter(letter rune) bool {
 	}
 	
 	return true
-}
+
 
 // IsGameOver checks if the game is over (win or lose)
 func (h *HangmanGame) IsGameOver() bool {
