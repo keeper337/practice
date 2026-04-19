@@ -1,63 +1,55 @@
 # Installation Guide
 
-This document provides clear installation steps for the project.
+This document provides clear steps for installing and running the project on different platforms.
 
 ## Prerequisites
 
-Before installing, ensure you have the following:
+Before installing the project, ensure you have the following:
 
 - Go 1.21 or higher
 - Git
-- A Unix-like environment (Linux/macOS) or Windows with WSL
+- A working Go environment
 
 ## Installation Steps
 
-1. Clone the repository:
+1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/practice.git
-   cd practice
+   git clone https://github.com/your-org/your-repo.git
+   cd your-repo
    ```
 
-2. Install dependencies:
+2. **Install dependencies**
    ```bash
    go mod tidy
    ```
 
-3. Build the project:
+3. **Build the project**
    ```bash
-   go build -o practice .
+   go build -o your-app .
    ```
 
-4. Run the application:
+4. **Run the application**
    ```bash
-   ./practice
+   ./your-app
    ```
 
-## Platform Compatibility
+## Platform-Specific Instructions
 
-The installation steps are compatible with:
+### Linux/macOS
 
-- Linux (Ubuntu, CentOS)
-- macOS (Intel and Apple Silicon)
-- Windows (with WSL)
+The installation steps are the same as above.
 
-Ensure that you have the required tools installed for your platform.
+### Windows
+
+1. Open PowerShell or Command Prompt.
+2. Follow the same steps as above, ensuring that you have Go installed and configured properly in your environment variables.
 
 ## Troubleshooting
 
-If you encounter issues during installation:
+If you encounter any issues during installation:
 
-1. Verify that Go is correctly installed:
-   ```bash
-   go version
-   ```
+- Ensure that Go is correctly installed by running `go version`.
+- Make sure your `GOPATH` and `GOROOT` are set correctly.
+- Run `go mod tidy` to ensure all dependencies are fetched correctly.
 
-2. Ensure `GOPATH` and `GOROOT` are set properly in your environment.
-
-3. If `go mod tidy` fails, try:
-   ```bash
-   go clean -modcache
-   go mod tidy
-   ```
-
-4. For Windows users with WSL, ensure that the WSL environment is up to date.
+For more information, refer to the [official Go documentation](https://golang.org/doc/).
