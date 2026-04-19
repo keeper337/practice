@@ -32,3 +32,4 @@ If a player guesses incorrectly, their wrong guess count increases. If they exce
 - Added support for custom words
 - Improved error handling
 - Enhanced user interface with better feedback messages
+- Fixed bug in letter guessing logic
