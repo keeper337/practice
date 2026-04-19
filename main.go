@@ -29,7 +29,12 @@ func NewGame(word string) *Game {
 
 // Guess processes a letter guess
 func (g *Game) Guess(letter rune) bool {
-	letter = strings.ToUpper(string(letter))[0]
+	// Convert letter to uppercase for comparison
+	upperLetter := strings.ToUpper(string(letter))
+	if len(upperLetter) == 0 {
+		return false // Invalid input
+	}
+	letter = rune(upperLetter[0])
 	
 	// Check if letter was already guessed
 	for _, l := range g.guessedLetters {
@@ -55,7 +60,7 @@ func (g *Game) Guess(letter rune) bool {
 	}
 	
 	return found
-}
+
 
 // GetLives returns the current number of lives
 func (g *Game) GetLives() int {
