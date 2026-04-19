@@ -5,76 +5,41 @@ import (
 	"math"
 )
 
-// DifficultyValidator validates difficulty levels for tasks
+// DifficultyValidator provides methods for validating and scoring difficulty levels.
 type DifficultyValidator struct{}
 
-// ValidateDifficulty checks if the difficulty level is within acceptable bounds
-func (dv *DifficultyValidator) ValidateDifficulty(difficulty float64) (bool, error) {
-	if difficulty < 0 {
-		return false, fmt.Errorf("difficulty cannot be negative")
-	}
-	
-	if difficulty > 100 {
-		return false, fmt.Errorf("difficulty cannot exceed 100")
-	}
-	
-	return true, nil
+// ValidateDifficulty checks if the provided difficulty level is within acceptable bounds.
+func (dv *DifficultyValidator) ValidateDifficulty(level float64) bool {
+	return level >= 0 && level <= 10
 }
 
-// NormalizeDifficulty ensures difficulty is within [0, 100] range
-func (dv *DifficultyValidator) NormalizeDifficulty(difficulty float64) float64 {
-	if difficulty < 0 {
+// NormalizeDifficulty scales the difficulty level to a [0, 1] range.
+func (dv *DifficultyValidator) NormalizeDifficulty(level float64) float64 {
+	if level < 0 {
 		return 0
 	}
-	if difficulty > 100 {
-		return 100
+	if level > 10 {
+		return 1
 	}
-	return difficulty
+	return level / 10
 }
 
-// CalculateDifficultyScore computes a normalized difficulty score
-func (dv *DifficultyValidator) CalculateDifficultyScore(tasks []int) (float64, error) {
-	if len(tasks) == 0 {
-		return 0, fmt.Errorf("no tasks provided")
-	}
-	
-	var sum int
-	for _, task := range tasks {
-		if task < 0 {
-			return 0, fmt.Errorf("task difficulty cannot be negative")
-		}
-		sum += task
-	}
-	
-	average := float64(sum) / float64(len(tasks))
-	return math.Min(average, 100), nil
+// CalculateScore computes a normalized score based on difficulty and other factors.
+func (dv *DifficultyValidator) CalculateScore(difficulty, effort, time float64) float64 {
+	normalizedDifficulty := dv.NormalizeDifficulty(difficulty)
+	normalizedEffort := math.Min(effort/10, 1.0)
+	normalizedTime := math.Min(time/10, 1.0)
+
+	// Weighted average: difficulty (50%), effort (30%), time (20%)
+	score := (normalizedDifficulty*0.5 + normalizedEffort*0.3 + normalizedTime*0.2)
+	return score
 }
 
 func main() {
 	validator := &DifficultyValidator{}
-	
-	// Test cases
-	testCases := []float64{50, -10, 150, 75.5}
-	
-	for _, difficulty := range testCases {
-		valid, err := validator.ValidateDifficulty(difficulty)
-		if err != nil {
-			fmt.Printf("Validation failed for %v: %v\n", difficulty, err)
-		} else {
-			fmt.Printf("Validation result for %v: %v\n", difficulty, valid)
-		}
-	}
-	
-	// Test normalization
-	fmt.Printf("Normalized 120: %v\n", validator.NormalizeDifficulty(120))
-	fmt.Printf("Normalized -10: %v\n", validator.NormalizeDifficulty(-10))
-	
-	// Test score calculation
-	tasks := []int{30, 40, 50, 60}
-	score, err := validator.CalculateDifficultyScore(tasks)
-	if err != nil {
-		fmt.Printf("Error calculating score: %v\n", err)
-	} else {
-		fmt.Printf("Average difficulty score: %v\n", score)
-	}
+
+	// Example usage
+	fmt.Println("Validating difficulty level 7:", validator.ValidateDifficulty(7))
+	fmt.Println("Normalizing difficulty level 7:", validator.NormalizeDifficulty(7))
+	fmt.Println("Calculating score for difficulty=8, effort=6, time=5:", validator.CalculateScore(8, 6, 5))
 }

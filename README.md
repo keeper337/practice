@@ -1,51 +1,24 @@
-# Word Game
+# Difficulty Validator
 
-A simple word game implemented in Go with three difficulty levels: Easy, Medium, and Hard.
+This project provides a Go implementation for validating and scoring difficulty levels based on multiple factors.
 
 ## Features
 
-- Select difficulty level (1-3)
-- Display words for the selected difficulty
-- Clean and structured code
+- Validate if a difficulty level is within acceptable bounds (0-10)
+- Normalize difficulty levels to a [0, 1] range
+- Calculate a normalized score based on difficulty, effort, and time
 
-## How to Run
+## Usage
 
-1. Make sure you have Go installed.
-2. Navigate to the project directory.
-3. Run `go run main.go`.
+```go
+validator := &DifficultyValidator{}
 
-## Difficulty Levels
+// Validate difficulty level
+isValid := validator.ValidateDifficulty(7) // true
 
-- **Easy**: 10 simple words
-- **Medium**: 10 medium-difficulty words
-- **Hard**: 10 challenging words
+// Normalize difficulty level
+normalized := validator.NormalizeDifficulty(7) // 0.7
 
-## Example Output
-
-```
-Welcome to the Word Game!
-=========================
-
-Please select a difficulty level:
-1. Easy
-2. Medium
-3. Hard
-
-Enter your choice (1-3): 1
-
-You selected Easy difficulty.
-Loading word list...
-Words for this difficulty level:
-1. cat
-2. dog
-3. sun
-4. car
-5. book
-6. tree
-7. fish
-8. bird
-9. moon
-10. star
-
-Game would start now with these words.
+// Calculate score
+score := validator.CalculateScore(8, 6, 5) // 0.64
 ```
