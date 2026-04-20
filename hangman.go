@@ -1,26 +1,28 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"os"
 	"strings"
 	"unicode"
 )
 
 // HangmanGame represents a hangman game instance
 type HangmanGame struct {
-	wordToGuess string
-	guessedLetters map[rune]bool
+	wordToGuess     string
+	guessedLetters  map[rune]bool
 	maxWrongGuesses int
-	wrongGuesses int
+	wrongGuesses    int
 }
 
 // NewHangmanGame creates a new hangman game with the given word
 func NewHangmanGame(word string) *HangmanGame {
 	return &HangmanGame{
-		wordToGuess: strings.ToLower(word),
-		guessedLetters: make(map[rune]bool),
+		wordToGuess:     strings.ToLower(word),
+		guessedLetters:  make(map[rune]bool),
 		maxWrongGuesses: 6,
-		wrongGuesses: 0,
+		wrongGuesses:    0,
 	}
 }
 
@@ -146,13 +148,29 @@ func main() {
 	fmt.Printf("Word: %s\n", game.DisplayWord())
 	game.DisplayHangman()
 	
-	// Simulate some guesses
-	game.GuessLetter('h')
-	game.GuessLetter('a')
-	game.GuessLetter('n')
-	game.GuessLetter('g')
+	// Get user input for guesses
+	scanner := bufio.NewScanner(os.Stdin)
+	for !game.IsGameOver() {
+		fmt.Print("Enter a letter: ")
+		if scanner.Scan() {
+			input := scanner.Text()
+			if len(input) > 0 {
+				letter := rune(input[0])
+				result := game.GuessLetter(letter)
+				fmt.Printf("Word: %s\n", game.DisplayWord())
+				game.DisplayHangman()
+				if !result {
+					fmt.Printf("Wrong guess! Wrong guesses: %d/%d\n", game.GetWrongGuesses(), game.GetMaxWrongGuesses())
+				} else {
+					fmt.Println("Correct guess!")
+				}
+			}
+		}
+	}
 	
-	fmt.Printf("Word: %s\n", game.DisplayWord())
-	game.DisplayHangman()
-	fmt.Printf("Wrong guesses: %d/%d\n", game.GetWrongGuesses(), game.GetMaxWrongGuesses())
+	if game.IsWinner() {
+		fmt.Println("Congratulations! You won!")
+	} else {
+		fmt.Println("Game over! You lost.")
+	}
 }
