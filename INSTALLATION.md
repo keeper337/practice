@@ -1,63 +1,73 @@
 # Installation Guide
 
-This guide provides step-by-step instructions to install and run the practice repository on your local machine.
+This guide provides step-by-step instructions to install and run the practice repository on different platforms.
 
 ## Prerequisites
 
-Before you begin, ensure you have the following installed:
+Before installing, ensure you have the following:
 
-- [Go 1.21 or higher](https://golang.org/dl/)
-- A working Go environment configured with `GOPATH` and `GOROOT`
+- Go 1.21 or higher installed on your system.
+- A working Go environment set up (GOPATH, GOROOT, etc.).
 
 ## Installation Steps
 
-1. **Clone the repository**
+### Step 1: Clone the Repository
 
-   ```bash
-   git clone https://github.com/your-username/practice.git
-   cd practice
-   ```
+Clone the repository to your local machine using Git:
 
-2. **Install dependencies**
+```bash
+git clone https://github.com/your-username/practice.git
+cd practice
+```
 
-   This project uses Go modules, so dependencies will be automatically downloaded when you build or run the project.
+### Step 2: Verify Go Installation
 
-3. **Build the project**
+Ensure that Go is correctly installed and accessible in your terminal:
 
-   To build the project, run:
+```bash
+go version
+```
 
-   ```bash
-   go build -o practice main.go
-   ```
+You should see output similar to:
 
-4. **Run the project**
+```
+go version go1.21.x linux/amd64
+```
 
-   After building, execute the binary:
+### Step 3: Build the Project
 
-   ```bash
-   ./practice
-   ```
+Navigate to the project directory and build the project using Go:
 
-   You should see the output:
+```bash
+go build
+```
 
-   ```
-   Hello, practice repository!
-   ```
+This will generate an executable file named `practice`.
+
+### Step 4: Run the Application
+
+Execute the built application:
+
+```bash
+./practice
+```
+
+You should see the following output:
+
+```
+Hello, practice repository!
+```
 
 ## Cross-Platform Compatibility
 
-This project is written in Go and will run on any platform that supports Go 1.21 or higher, including:
-
-- Linux
-- macOS
-- Windows
-
-Ensure that your system's PATH includes the Go binary directory for easy access to `go` commands.
+The installation steps above are compatible with Linux, macOS, and Windows (using WSL or Git Bash).
 
 ## Troubleshooting
 
-If you encounter issues during installation or execution:
+If you encounter any issues during installation or execution:
 
-- Make sure Go is correctly installed and configured.
-- Verify that the project is in the correct location within your `GOPATH`.
-- Run `go mod tidy` if dependencies are missing.
+1. Ensure that your Go version is at least 1.21.
+2. Check that the `GOPATH` and `GOROOT` environment variables are correctly set.
+3. Make sure you have proper permissions to execute files in the directory.
+
+For further assistance, refer to the [Go documentation](https://golang.org/doc/).
