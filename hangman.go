@@ -94,12 +94,57 @@ func (h *HangmanGame) SetWordToGuess(word string) {
 	h.wrongGuesses = 0
 }
 
+// DisplayHangman shows a visual representation of the hangman progress
+func (h *HangmanGame) DisplayHangman() {
+	fmt.Println("  +---+")
+	fmt.Println("  |   |")
+	
+	switch h.wrongGuesses {
+	case 0:
+		fmt.Println("      |")
+		fmt.Println("      |")
+		fmt.Println("      |")
+		fmt.Println("=========")
+	case 1:
+		fmt.Println("  O   |")
+		fmt.Println("      |")
+		fmt.Println("      |")
+		fmt.Println("=========")
+	case 2:
+		fmt.Println("  O   |")
+		fmt.Println("  |   |")
+		fmt.Println("      |")
+		fmt.Println("=========")
+	case 3:
+		fmt.Println("  O   |")
+		fmt.Println(" /|   |")
+		fmt.Println("      |")
+		fmt.Println("=========")
+	case 4:
+		fmt.Println("  O   |")
+		fmt.Println(" /|\\  |")
+		fmt.Println("      |")
+		fmt.Println("=========")
+	case 5:
+		fmt.Println("  O   |")
+		fmt.Println(" /|\\  |")
+		fmt.Println(" /    |")
+		fmt.Println("=========")
+	case 6:
+		fmt.Println("  O   |")
+		fmt.Println(" /|\\  |")
+		fmt.Println(" / \\  |")
+		fmt.Println("=========")
+	}
+}
+
 func main() {
 	// Example usage
 	game := NewHangmanGame("hangman")
 	
 	fmt.Println("Welcome to Hangman!")
 	fmt.Printf("Word: %s\n", game.DisplayWord())
+	game.DisplayHangman()
 	
 	// Simulate some guesses
 	game.GuessLetter('h')
@@ -108,5 +153,6 @@ func main() {
 	game.GuessLetter('g')
 	
 	fmt.Printf("Word: %s\n", game.DisplayWord())
+	game.DisplayHangman()
 	fmt.Printf("Wrong guesses: %d/%d\n", game.GetWrongGuesses(), game.GetMaxWrongGuesses())
 }
