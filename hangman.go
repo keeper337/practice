@@ -5,6 +5,7 @@ import (
 	"math/rand"
 	"strings"
 	"time"
+	"unicode"
 )
 
 // WordList contains the list of words for the Hangman game
@@ -162,6 +163,12 @@ func main() {
 		}
 
 		letter := rune(strings.ToLower(input)[0])
+		
+		// Validate that the input is a letter
+		if !unicode.IsLetter(letter) {
+			fmt.Println("Please enter a valid letter.")
+			continue
+		}
 
 		if !game.GuessLetter(letter) {
 			fmt.Printf("Incorrect guess! The letter '%c' is not in the word.\n", letter)
