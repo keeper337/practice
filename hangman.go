@@ -40,7 +40,7 @@ func (h *HangmanGame) DisplayWord() string {
 // GuessLetter processes a letter guess
 func (h *HangmanGame) GuessLetter(letter rune) bool {
 	// Convert to lowercase for case-insensitive comparison
-	letter = rune(strings.ToLower(string(letter))[0])
+	letter = unicode.ToLower(letter)
 	
 	if h.guessedLetters[letter] {
 		return true // Already guessed
