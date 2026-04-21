@@ -14,4 +14,5 @@ This repository now includes a minimal game-state implementation in `hangman.py`
 - Incorrect guesses increment `wrong_guesses` and reduce `remaining_attempts`.
 - Game ends with `GameStatus.WON` when all letters are revealed.
 - Game ends with `GameStatus.LOST` when attempts reach zero.
-- `reset_round(secret_word)` starts a new round after win/loss.
+- `start_new_round(secret_word)` starts a new round after win/loss.
+- `reset_round(secret_word)` remains available as a compatibility alias.

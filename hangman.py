@@ -18,9 +18,7 @@ class HangmanGame:
     status: GameStatus = GameStatus.IN_PROGRESS
 
     def __post_init__(self) -> None:
-        self.secret_word = self.secret_word.strip().lower()
-        if not self.secret_word or not self.secret_word.isalpha():
-            raise ValueError("secret_word must contain only alphabetic characters")
+        self.secret_word = self._normalize_secret_word(self.secret_word)
         if self.max_wrong_guesses <= 0:
             raise ValueError("max_wrong_guesses must be greater than zero")
 
@@ -53,17 +51,25 @@ class HangmanGame:
         self._refresh_status()
         return is_correct
 
-    def reset_round(self, secret_word: str) -> None:
-        self.secret_word = secret_word.strip().lower()
-        if not self.secret_word or not self.secret_word.isalpha():
-            raise ValueError("secret_word must contain only alphabetic characters")
-
+    def start_new_round(self, secret_word: str) -> None:
+        self.secret_word = self._normalize_secret_word(secret_word)
         self.guessed_letters.clear()
         self.wrong_guesses = 0
         self.status = GameStatus.IN_PROGRESS
+
+    def reset_round(self, secret_word: str) -> None:
+        # Backward-compatible alias for callers using the previous API.
+        self.start_new_round(secret_word)
 
     def _refresh_status(self) -> None:
         if all(char in self.guessed_letters for char in self.secret_word):
             self.status = GameStatus.WON
         elif self.wrong_guesses >= self.max_wrong_guesses:
             self.status = GameStatus.LOST
+
+    @staticmethod
+    def _normalize_secret_word(secret_word: str) -> str:
+        normalized = secret_word.strip().lower()
+        if not normalized or not normalized.isalpha():
+            raise ValueError("secret_word must contain only alphabetic characters")
+        return normalized
