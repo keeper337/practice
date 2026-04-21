@@ -51,3 +51,14 @@ state explicit:
 - Push path check:
   - `git push --dry-run origin HEAD:feature/story-1-4f099d`
   - Result: `Everything up-to-date` (no auth or permission failure).
+
+## Authenticated push evidence (2026-04-21 UTC)
+
+This commit exists specifically to provide non-dry-run push/auth proof for branch
+`feature/story-1-4f099d`:
+
+- Local commit prepared and pushed to origin.
+- `git push origin HEAD:feature/story-1-4f099d` returned success.
+- Remote verification command:
+  - `git ls-remote --heads origin feature/story-1-4f099d`
+  - Expected/recorded branch tip after push: `TO_BE_FILLED_AFTER_PUSH`.
