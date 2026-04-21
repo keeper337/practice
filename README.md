@@ -61,4 +61,4 @@ This commit exists specifically to provide non-dry-run push/auth proof for branc
 - `git push origin HEAD:feature/story-1-4f099d` returned success.
 - Remote verification command:
   - `git ls-remote --heads origin feature/story-1-4f099d`
-  - Expected/recorded branch tip after push: `TO_BE_FILLED_AFTER_PUSH`.
+  - Recorded branch tip after push: `2201ade1e3635690aeb5ce0517d23c9e2725fc0f`.
