@@ -3,6 +3,83 @@ import pytest
 from hangman import GameStatus, HangmanGame
 
 
+def test_correct_guess_reveals_letters_without_consuming_attempt() -> None:
+    game = HangmanGame("letter")
+
+    result = game.guess_letter("e")
+
+    assert result is True
+    assert game.masked_word == "_e__e_"
+    assert game.wrong_guesses == 0
+    assert game.remaining_attempts == 6
+    assert game.status is GameStatus.IN_PROGRESS
+
+
+def test_incorrect_guess_consumes_attempt_and_tracks_letter() -> None:
+    game = HangmanGame("letter")
+
+    result = game.guess_letter("x")
+
+    assert result is False
+    assert game.masked_word == "______"
+    assert game.wrong_guesses == 1
+    assert game.remaining_attempts == 5
+    assert game.guessed_letters == {"x"}
+    assert game.status is GameStatus.IN_PROGRESS
+
+
+def test_duplicate_guess_is_idempotent_for_correct_letter() -> None:
+    game = HangmanGame("banana")
+    first = game.guess_letter("a")
+    before = (set(game.guessed_letters), game.wrong_guesses, game.status, game.masked_word)
+
+    second = game.guess_letter("a")
+
+    assert first is True
+    assert second is True
+    assert (set(game.guessed_letters), game.wrong_guesses, game.status, game.masked_word) == before
+
+
+def test_duplicate_guess_is_idempotent_for_incorrect_letter() -> None:
+    game = HangmanGame("banana")
+    first = game.guess_letter("x")
+    before = (set(game.guessed_letters), game.wrong_guesses, game.status, game.masked_word)
+
+    second = game.guess_letter("x")
+
+    assert first is False
+    assert second is False
+    assert (set(game.guessed_letters), game.wrong_guesses, game.status, game.masked_word) == before
+
+
+def test_winning_guess_sets_won_state_and_blocks_further_guesses() -> None:
+    game = HangmanGame("go")
+    game.guess_letter("g")
+    assert game.status is GameStatus.IN_PROGRESS
+
+    result = game.guess_letter("o")
+
+    assert result is True
+    assert game.masked_word == "go"
+    assert game.status is GameStatus.WON
+    with pytest.raises(RuntimeError, match="round is complete"):
+        game.guess_letter("x")
+
+
+def test_losing_guess_sets_lost_state_and_blocks_further_guesses() -> None:
+    game = HangmanGame("a", max_wrong_guesses=2)
+    game.guess_letter("x")
+    assert game.status is GameStatus.IN_PROGRESS
+
+    result = game.guess_letter("y")
+
+    assert result is False
+    assert game.wrong_guesses == 2
+    assert game.status is GameStatus.LOST
+    with pytest.raises(RuntimeError, match="round is complete"):
+        game.guess_letter("z")
+
+
 def _win_round(game: HangmanGame) -> None:
     for letter in sorted(set(game.secret_word)):
         game.guess_letter(letter)
