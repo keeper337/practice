@@ -16,3 +16,4 @@ This repository now includes a minimal game-state implementation in `hangman.py`
 - Game ends with `GameStatus.LOST` when attempts reach zero.
 - `start_new_round(secret_word, max_wrong_guesses=None)` starts a new round after win/loss and can optionally reconfigure attempts.
 - `reset_round(secret_word, max_wrong_guesses=None)` remains available as a compatibility alias.
+- Starting/resetting a round is intentionally scoped to completed rounds; attempting it while a round is still in progress raises `RuntimeError`.

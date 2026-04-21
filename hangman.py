@@ -62,6 +62,8 @@ class HangmanGame:
         secret_word: str,
         max_wrong_guesses: int | None = None,
     ) -> None:
+        if self.status is GameStatus.IN_PROGRESS:
+            raise RuntimeError("cannot start a new round while current round is in progress")
         if max_wrong_guesses is not None:
             if max_wrong_guesses <= 0:
                 raise ValueError("max_wrong_guesses must be greater than zero")
