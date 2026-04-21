@@ -36,6 +36,8 @@ class HangmanGame:
     def guess_letter(self, letter: str) -> bool:
         if self.status is not GameStatus.IN_PROGRESS:
             raise RuntimeError("round is complete, start a new round")
+        if not isinstance(letter, str):
+            raise ValueError("guess must be a single alphabetic letter")
         if not letter or len(letter) != 1 or not letter.isalpha():
             raise ValueError("guess must be a single alphabetic letter")
 
@@ -79,6 +81,8 @@ class HangmanGame:
             self.status = GameStatus.WON
         elif self.wrong_guesses >= self.max_wrong_guesses:
             self.status = GameStatus.LOST
+        else:
+            self.status = GameStatus.IN_PROGRESS
 
     def _initialize_round(self, secret_word: str) -> None:
         self.secret_word = self._normalize_secret_word(secret_word)
@@ -88,6 +92,8 @@ class HangmanGame:
 
     @staticmethod
     def _normalize_secret_word(secret_word: str) -> str:
+        if not isinstance(secret_word, str):
+            raise ValueError("secret_word must contain only alphabetic characters")
         normalized = secret_word.strip().lower()
         if not normalized or not normalized.isalpha():
             raise ValueError("secret_word must contain only alphabetic characters")
