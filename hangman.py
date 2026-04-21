@@ -40,8 +40,12 @@ class HangmanGame:
             raise ValueError("guess must be a single alphabetic letter")
 
         normalized = letter.lower()
-        if normalized in self.guessed_letters:
-            return normalized in self.secret_word
+        is_duplicate_guess = normalized in self.guessed_letters
+        if is_duplicate_guess:
+            # Duplicate guesses are idempotent: no state mutation, same result.
+            is_correct = normalized in self.secret_word
+            self._refresh_status()
+            return is_correct
 
         self.guessed_letters.add(normalized)
         is_correct = normalized in self.secret_word
