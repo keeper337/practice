@@ -51,15 +51,27 @@ class HangmanGame:
         self._refresh_status()
         return is_correct
 
-    def start_new_round(self, secret_word: str) -> None:
+    def start_new_round(
+        self,
+        secret_word: str,
+        max_wrong_guesses: int | None = None,
+    ) -> None:
         self.secret_word = self._normalize_secret_word(secret_word)
+        if max_wrong_guesses is not None:
+            if max_wrong_guesses <= 0:
+                raise ValueError("max_wrong_guesses must be greater than zero")
+            self.max_wrong_guesses = max_wrong_guesses
         self.guessed_letters.clear()
         self.wrong_guesses = 0
         self.status = GameStatus.IN_PROGRESS
 
-    def reset_round(self, secret_word: str) -> None:
+    def reset_round(
+        self,
+        secret_word: str,
+        max_wrong_guesses: int | None = None,
+    ) -> None:
         # Backward-compatible alias for callers using the previous API.
-        self.start_new_round(secret_word)
+        self.start_new_round(secret_word, max_wrong_guesses=max_wrong_guesses)
 
     def _refresh_status(self) -> None:
         if all(char in self.guessed_letters for char in self.secret_word):
