@@ -70,3 +70,27 @@ def test_reset_round_alias_uses_same_completed_round_scope() -> None:
 
     assert game.secret_word == "storm"
     assert game.status is GameStatus.IN_PROGRESS
+
+
+def test_start_new_round_validation_is_atomic_on_invalid_secret() -> None:
+    game = HangmanGame("pear")
+    _win_round(game)
+
+    with pytest.raises(ValueError, match="secret_word"):
+        game.start_new_round("123", max_wrong_guesses=2)
+
+    assert game.secret_word == "pear"
+    assert game.max_wrong_guesses == 6
+    assert game.status is GameStatus.WON
+
+
+def test_reset_round_alias_validation_is_atomic_on_invalid_secret() -> None:
+    game = HangmanGame("abc", max_wrong_guesses=2)
+    _lose_round(game)
+
+    with pytest.raises(ValueError, match="secret_word"):
+        game.reset_round("!!!", max_wrong_guesses=4)
+
+    assert game.secret_word == "abc"
+    assert game.max_wrong_guesses == 2
+    assert game.status is GameStatus.LOST
