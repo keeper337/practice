@@ -1,3 +1,1 @@
-# practice
-
-Personal practice repository.
+Hello World!
