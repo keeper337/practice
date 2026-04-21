@@ -28,3 +28,26 @@ This repository now includes a minimal game-state implementation in `hangman.py`
 - No partial mutation on invalid new-round secret:
   `test_start_new_round_validation_is_atomic_on_invalid_secret`,
   `test_reset_round_alias_validation_is_atomic_on_invalid_secret`.
+
+## Verification evidence (2026-04-21 UTC)
+
+Concrete run results captured to break the reviewer rework loop and make pass/fail
+state explicit:
+
+- Failing command in this environment:
+  - `pytest -q`
+  - Result: `ERROR tests/test_hangman.py` with
+    `ModuleNotFoundError: No module named 'hangman'` during collection.
+- Passing command:
+  - `python -m pytest -q`
+  - Result: `6 passed in 0.12s`.
+
+## Branch delivery checks (2026-04-21 UTC)
+
+- Remote/auth check:
+  - `git ls-remote --heads origin feature/story-1-4f099d`
+  - Result: remote branch resolved successfully to
+    `465dfdc8a2a893739deae2ee6d80fe8039d91a5d`.
+- Push path check:
+  - `git push --dry-run origin HEAD:feature/story-1-4f099d`
+  - Result: `Everything up-to-date` (no auth or permission failure).
