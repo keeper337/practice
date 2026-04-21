@@ -18,9 +18,9 @@ class HangmanGame:
     status: GameStatus = GameStatus.IN_PROGRESS
 
     def __post_init__(self) -> None:
-        self.secret_word = self._normalize_secret_word(self.secret_word)
         if self.max_wrong_guesses <= 0:
             raise ValueError("max_wrong_guesses must be greater than zero")
+        self._initialize_round(self.secret_word)
 
     @property
     def remaining_attempts(self) -> int:
@@ -56,14 +56,11 @@ class HangmanGame:
         secret_word: str,
         max_wrong_guesses: int | None = None,
     ) -> None:
-        self.secret_word = self._normalize_secret_word(secret_word)
         if max_wrong_guesses is not None:
             if max_wrong_guesses <= 0:
                 raise ValueError("max_wrong_guesses must be greater than zero")
             self.max_wrong_guesses = max_wrong_guesses
-        self.guessed_letters.clear()
-        self.wrong_guesses = 0
-        self.status = GameStatus.IN_PROGRESS
+        self._initialize_round(secret_word)
 
     def reset_round(
         self,
@@ -78,6 +75,12 @@ class HangmanGame:
             self.status = GameStatus.WON
         elif self.wrong_guesses >= self.max_wrong_guesses:
             self.status = GameStatus.LOST
+
+    def _initialize_round(self, secret_word: str) -> None:
+        self.secret_word = self._normalize_secret_word(secret_word)
+        self.guessed_letters = set()
+        self.wrong_guesses = 0
+        self.status = GameStatus.IN_PROGRESS
 
     @staticmethod
     def _normalize_secret_word(secret_word: str) -> str:
